@@ -13,20 +13,15 @@ Do
     )
 
     colors = Array("red", "blue", "black", "purple", "maroon", "green", "darkred", "navy")
-    bg = colors(Int(Rnd * UBound(colors) + 1))
-    text = msg(Int(Rnd * UBound(msg) + 1))
+    bg = colors(Int(Rnd * (UBound(colors) + 1)))
+    text = msg(Int(Rnd * (UBound(msg) + 1)))
 
-    shell.Run "mshta ""javascript:
-        var x=0, y=0, dx=10, dy=10;
-        var win = window.open('', '', 'width=350,height=100,top=0,left=0');
-        win.document.write('<body style=\'margin:0;background:" & bg & ";color:white;font-family:sans-serif\'><h3 style=\'text-align:center;margin-top:30px\'>" & text & "</h3></body>');
-        setInterval(function(){
-            x += dx; y += dy;
-            if(x > screen.width - 350 || x < 0) dx *= -1;
-            if(y > screen.height - 100 || y < 0) dy *= -1;
-            win.moveTo(x, y);
-        }, 20);
-    """, 0, False
+    command = "mshta ""javascript:var x=0,y=0,dx=10,dy=10;" & _
+              "var win=window.open('','', 'width=350,height=100,top=0,left=0');" & _
+              "win.document.write('<body style=\'margin:0;background:" & bg & ";color:white;font-family:sans-serif\'><h3 style=\'text-align:center;margin-top:30px\'>" & text & "</h3></body>');" & _
+              "setInterval(function(){x+=dx;y+=dy;if(x>screen.width-350||x<0)dx*=-1;if(y>screen.height-100||y<0)dy*=-1;win.moveTo(x,y);},20);"""
 
-    WScript.Sleep 200 ' Spam delay; reduce for more chaos
+    shell.Run command, 0, False
+
+    WScript.Sleep 200 ' Lower = faster spam
 Loop
