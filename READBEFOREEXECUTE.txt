@@ -1,0 +1,1 @@
+this is just a simple virus i made, its not really destructive, I may make a destructive version that corrupts your bootloader, and overwrites the LogonUI.
